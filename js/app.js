@@ -1,24 +1,36 @@
 $(function() {
-	var allLinks = $('.js-tabs-link'),
-		allContents = $('.js-content-item'),
-		activeLink = allLinks.filter('.is-active') || allLinks.eq(0),
-		activeLinkData = activeLink.data('link');
+	var allLinks = $(document).find('.js-tabs-link'), 
+		allContent = $(document).find('.js-content-item'), 
+		activeLink = allLinks.filter('.is-active').length ? allLinks.filter('.is-active') : allLinks.eq(0),
+		linkData = activeLink.data('link'),
+		filtered = filterElements(linkData);
 
-	console.log(activeLink.get(0), activeLinkData);
+	function filterElements(linkData) {
+		var link, content;
 
-	function filterElements(activeLinkClass) {
-		
+		link = allLinks.filter('[data-link="' + linkData + '"]');
+		content = allContent.filter('[data-content="' + linkData + '"]');
+
+		return {
+			link: link,
+			content: content
+		};
+	}	
+
+	function addClassElement(currentLink, currentContent) {
+		allLinks.add(allContent).removeClass('is-active');
+		currentLink.add(currentContent).addClass('is-active');
 	}
+	
+	addClassElement(filtered.link, filtered.content);	
 
-	// allLinks.eq(0).add(allContents.eq(0)).addClass('is-active');
+	allLinks.click(function(e) {
+		var that = $(this),
+			linkData = that.data('link'),
+			filtered = filterElements(linkData);
 
-	// allLinks.click(function(e) {
-	// 	var that = $(this),
-	// 		linkData = that.data('link'),
-	// 		content = $('.js-content-item[data-content="' + linkData + '"]');
+		e.preventDefault();
+		addClassElement(filtered.link, filtered.content);	
+	});
 
-	// 	e.preventDefault();
-	// 	allLinks.add(allContents).removeClass('is-active');
-	// 	that.add(content).addClass('is-active');	
-	// });
 })
