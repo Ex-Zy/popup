@@ -1,0 +1,71 @@
+@charset "UTF-8";
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5,
+h6, p, blockquote, pre, a, abbr, acronym, address, big,
+cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small,
+strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt,
+dd, ol, ul, li, fieldset, form, label, legend, table, caption,
+tbody, tfoot, thead, tr, th, td, article, aside, canvas, details,
+embed, figure, figcaption, footer, header, hgroup, menu, nav,
+output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+}
+
+html {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+img, fieldset, a img {
+  border: none;
+}
+
+div, input, textarea, select, button,
+h1, h2, h3, h4, h5, h6, a, span, a:focus {
+  outline: none;
+}
+
+ul, ol {
+  list-style-type: none;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.tabs {
+  width: 600px;
+  margin: 40px auto;
+  background: rgba(0, 0, 0, .2);
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, .6);
+}
+.tabs-control__item {
+  display: inline-block;
+  vertical-align: top;
+  width: 20%;
+}
+.tabs-control {
+  padding: 15px;
+  font-size: 0;
+  text-align: center;
+}
+.tabs-control__link {
+  font: 20px Arial, Helvetica, sans-serif;
+  text-decoration: none;
+  color: rgba(211,33, 45, 1);
+  transition: color .3s;
+ }
+.tabs-control__link:hover,
+.tabs-control__link.is-active {
+  color: rgba(211,33, 45, .5);
+}
+.tabs-content__item {
+  display: none;
+}
+.tabs-content__item.is-active {display: block;}
