@@ -76,16 +76,16 @@ html {
 .tabs-content__item {
   display: none;
 }
-.tabs-content__item.is-ready .slider {
-  visibility: visible;
-  opacity: 1;
-}
-.tabs-content__item.is-active {display: block;}
 .slider {
   visibility: hidden;
   opacity: 0;
   transition: all 0.3s;
 }
+.slider.is-ready {
+  visibility: visible;
+  opacity: 1;
+}
+.tabs-content__item.is-active {display: block;}
 .slider-slide {
   padding: 0 10px;
 }

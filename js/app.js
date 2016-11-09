@@ -54,7 +54,7 @@ $(function() {
     function initSLider(slider) {
 		slider.on("init", function(){
 	        setTimeout(function(){
-	           slider.parent().addClass("is-ready");
+	           slider.addClass("is-ready");
 	        },200);
 	    });
 
