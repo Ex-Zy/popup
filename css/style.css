@@ -123,3 +123,23 @@ html {
   height: 100%;
   object-fit: cover;
 }
+.modal-content {
+  display: none;
+}
+.modal-content__title {
+  font: 700 34px Arial, sans-serif;
+  color: #000;
+}
+.modal-content__list {
+  list-style-type: square;
+  line-height: 1;
+  font-size: 20px;
+}
+.modal-content__list li {
+  margin-bottom: 5px;
+}
+.modal-content__meta {
+  color: gray;
+  font-size: 15px;
+  margin-top: 10px;
+}
