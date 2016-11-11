@@ -5,11 +5,6 @@ $(function() {
 	let activeLink = ACTIVE_LINK_FOUND ? allLinks.filter('.is-active') : allLinks.eq(0);
 	let linkData = activeLink.data('link');
 	let filtered = filterElements(linkData);
-	let AllSliders = $(document).find(".slider");
-	let slider1 = $(document).find(".js-slider-index1");
-	let slider2 = $(document).find(".js-slider-index2");
-	let popup = $(document).find(".js-popup");
-
 
 	function filterElements(linkData) {
 		let link, content;
@@ -21,73 +16,57 @@ $(function() {
 			link: link,
 			content: content
 		};
-	}	
+	}
+
+	function initSLider(slider, option) {
+		function visibility(slider) {
+			slider.on('init', function() {
+				setTimeout(function(){
+					slider.addClass("is-ready");
+				},200);
+			});
+		}
+		visibility(slider);
+		slider.not('.slick-initialized').slick(option);
+	}
 
 	function showActiveElements(currentLink, currentContent) {
-		const FIRST_SLIDE = currentContent.index() === 0;
-		const SECOND_SLIDE = currentContent.index() === 1;
-
-		allLinks.add(allContent).removeClass('is-active');
-		currentLink.add(currentContent).addClass('is-active');
-		console.log('Первый слайд - ' + FIRST_SLIDE + ' Второй слайд - ' + SECOND_SLIDE);
-
-		if(FIRST_SLIDE) {
-			initSLider(slider1);
-		} else if(SECOND_SLIDE) {
-			initSLider(slider2);
-		} else {
-			AllSliders.hide();
-		}
+		let currentSlider = currentContent.find('.slider');
+		
+			allLinks.add(allContent).removeClass('is-active');
+			currentLink.add(currentContent).addClass('is-active');
+			initSLider(currentSlider, {slidesToShow: 2, slidesToScroll: 1});
 	}
 	
 	showActiveElements(filtered.link, filtered.content);
 
 	allLinks.click(function(e) {
-		let that = $(this),
-			linkData = that.data('link'),
-			filtered = filterElements(linkData);
+		let that = $(this);
+		let linkData = that.data('link');
+		let filtered = filterElements(linkData);
 
 		e.preventDefault();
 		showActiveElements(filtered.link, filtered.content);
 	});
 
-    function initSLider(slider) {
-		slider.on("init", function(){
-	        setTimeout(function(){
-	           slider.addClass("is-ready");
-	        },200);
-	    });
+	$(".js-open-popup").click(function() {
+		let that = $(this);
+		let popupActive = $(".js-popup").has('.is-active');
 
-	    slider.not('.slick-initialized').slick({
-	    	slidesToShow: 2,
-	    	slidesToScroll: 1
-	    });
-    }
+		if(popupActive) {
+			$(".js-popup").addClass('is-active');
+		} else {
+			$(".js-popup").removeClass('is-active');
+		}
+	})
 
-    // function checkActiveSlider(argument) {
-    // 	// body...
-    // }
+	$('.js-close').click(function() {
+		$(".js-popup").removeClass('is-active');
+	})
 
-    $(".js-open-popup").click(function() {
-    	let that = $(this);
-    	let popupActive = popup.has('.is-active');
-    	let sliderClone = that.parents('.js-content-item').html();
-
-    	if(popupActive) {
-    		popup.addClass('is-active');
-    		$('.window__col2').html(sliderClone);
-    	} else {
-    		popup.removeClass('is-active');
-    	}
-    })
-
-    $('.js-close').click(function() {
-    	popup.removeClass('is-active');
-    })
-
-    $(document).click(function(e) {
-		if (popup.is(e.target) ) {
-			popup.removeClass('is-active');
+	$(document).click(function(e) {
+		if ($(".js-popup").is(e.target) ) {
+			$(".js-popup").removeClass('is-active');
 		}
 	});
 

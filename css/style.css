@@ -93,6 +93,9 @@ html {
   height: 200px;
   overflow: hidden;
   position: relative;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
 }
 .slider-slide__content {
   padding: 15px 15px 55px;
