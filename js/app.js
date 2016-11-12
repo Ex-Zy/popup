@@ -56,6 +56,7 @@ $(function() {
 		let index = +slide.attr('data-slick-index');
 		let innerPopup = $('.js-inner-popup');
 		let sliderPopup = $('<div></div>');
+		let counter = $('.counter');
 
 
 		popup.addClass('is-active');
@@ -75,6 +76,12 @@ $(function() {
 		})
 
 		initSlider(sliderPopup, {slidesToShow: 1, initialSlide: index, infinite: false});
+
+		counter.find('.counter__all').text(_slider.find('.slick-slide').length);
+		counter.find('.counter__current').text(index+1);
+		sliderPopup.on('beforeChange', function(e, slick, current, next) {
+			counter.find('.counter__current').text(next + 1);
+		});
 	})
 
 	$('.js-close').click(function() {
