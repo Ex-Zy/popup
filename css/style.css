@@ -125,6 +125,20 @@ html {
 }
 .modal-content {
   display: none;
+  overflow: hidden;
+}
+.modal-content__pic {
+  width: 50%;
+  height: 0;
+  padding-top: 50%;
+  float: right;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat
+}
+.modal-content__in {
+  width: 50%;
+  float: left;
 }
 .modal-content__title {
   font: 700 34px Arial, sans-serif;

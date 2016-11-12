@@ -26,7 +26,7 @@ $(function() {
 				slider.addClass('is-ready');
 			},200);
 		});
-		slider.slick(option);
+		slider.not('.slick-initialized').slick(option);
 	}
 
 	function showActiveElements(currentLink, currentContent) {
@@ -34,7 +34,7 @@ $(function() {
 		
 			allLinks.add(allContent).removeClass('is-active');
 			currentLink.add(currentContent).addClass('is-active');
-			initSlider(currentSlider, {slidesToShow: 2});
+			initSlider(currentSlider, {slidesToShow: 2, infinite: true});
 	}
 	
 	showActiveElements(filtered.link, filtered.content);
@@ -50,25 +50,42 @@ $(function() {
 
 	btn.click(function() {
 		let that = $(this);
-		let slide = that.parents('.slider-slide');
 		let _slider = that.parents('.slider');
-		let index = +slide.attr('data-slick-index') + 1;
+		let content = _slider.find('.modal-content');
+		let slide = that.parents('.slider-slide');
+		let index = +slide.attr('data-slick-index');
+		let innerPopup = $('.js-inner-popup');
+		let sliderPopup = $('<div></div>');
 
 
 		popup.addClass('is-active');
+		sliderPopup.attr('class', 'js-slider-popup');
+		innerPopup.prepend(sliderPopup);
+		sliderPopup.html(content.clone());
 
-		$('.window').prepend(
-			'<div class="js-slider-popup"></div>'
-		);
+		content.each(function(index) {
+			let imgData = _slider.find('.slider-slide__pic').eq(index).data('picture');
+			let picture;
+
+			picture = $('<div>').attr({
+				class: 'modal-content__pic',
+				style: 'background-image: url("'+ imgData + '")'
+			});
+			sliderPopup.find('.modal-content').eq(index).append(picture);
+		})
+
+		initSlider(sliderPopup, {slidesToShow: 1, initialSlide: index+2});
 	})
 
 	$('.js-close').click(function() {
 		popup.removeClass('is-active');
+		$('.js-slider-popup').remove();
 	})
 
 	popup.click(function(e) {
 		if ($(this).is(e.target) ) {
 			popup.removeClass('is-active');
+			$('.js-slider-popup').remove();
 		}
 	});
 

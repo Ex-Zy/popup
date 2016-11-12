@@ -14,8 +14,7 @@
   font-size: 0;
 }
 
-.popup:before,
-.window:before {
+.popup:before{
   content: "";
   display: inline-block;
   vertical-align: middle;
@@ -37,17 +36,7 @@
   color: #000;
   font: 400 24px  Arial, Helvetica, sans-serif;
   position: relative;
-}
-.window__col1,
-.window__col2 {
-  display: inline-block;
-  vertical-align: middle;
-  width: 49%;
-}
-.window img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+  text-align: left;
 }
 .btn-close {
   position: absolute;
