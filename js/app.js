@@ -34,7 +34,7 @@ $(function() {
 		
 			allLinks.add(allContent).removeClass('is-active');
 			currentLink.add(currentContent).addClass('is-active');
-			initSlider(currentSlider, {slidesToShow: 2, infinite: true});
+			initSlider(currentSlider, {slidesToShow: 2, infinite: false});
 	}
 	
 	showActiveElements(filtered.link, filtered.content);
@@ -74,7 +74,7 @@ $(function() {
 			sliderPopup.find('.modal-content').eq(index).append(picture);
 		})
 
-		initSlider(sliderPopup, {slidesToShow: 1, initialSlide: index+2});
+		initSlider(sliderPopup, {slidesToShow: 1, initialSlide: index, infinite: false});
 	})
 
 	$('.js-close').click(function() {
