@@ -56,15 +56,14 @@ $(function() {
 		let slide = that.parents('.slider-slide');
 		let index = +slide.attr('data-slick-index');
 		let innerPopup = $('.js-inner-popup');
-		let sliderPopup = $('<div></div>');
+		let sliderPopup = $('<div class="js-slider-popup"></div>');
 		let counter = $('.counter');
 		let counterSlides = counter.find('.counter__all');
 		let counterCurrent = counter.find('.counter__current');
 
 
 		innerPopup.prepend(
-			sliderPopup.attr('class', 'js-slider-popup')
-					   .prepend(content.clone())
+			sliderPopup.prepend(content.clone())
 		);
 
 		content.each(function(index) {
@@ -74,7 +73,7 @@ $(function() {
 				style: 'background-image: url("'+ imgData + '")'
 			});
 			sliderPopup.find('.modal-content').eq(index).append(picture);
-		})
+		});
 
 		popup.addClass('is-active');
 		initSlider(sliderPopup, {slidesToShow: 1, initialSlide: index, infinite: false});
@@ -83,17 +82,20 @@ $(function() {
 		sliderPopup.on('beforeChange', function(e, slick, current, next) {
 			counter.find('.counter__current').text(next + 1);
 		});
-	})
+	});
+
+	function destroyPopup(popup, popupSlider) {
+		popup.removeClass('is-active');
+		popupSlider.remove();
+	}
 
 	close.click(function() {
-		popup.removeClass('is-active');
-		$('.js-slider-popup').remove();
-	})
+		destroyPopup(popup, $('.js-slider-popup'));
+	});
 
 	popup.click(function(e) {
 		if ($(this).is(e.target) ) {
-			popup.removeClass('is-active');
-			$('.js-slider-popup').remove();
+			destroyPopup(popup, $('.js-slider-popup'));
 		}
 	});
 });
