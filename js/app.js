@@ -1,52 +1,54 @@
 $(function() {
-	let allLinks = $('.js-tabs-link'); 
+
+	let MYAPP = {
+		filterElements: function (linkData) {
+			link = allLinks.filter('[data-link="' + linkData + '"]');
+			content = allContent.filter('[data-content="' + linkData + '"]');
+
+			return {
+				link: link,
+				content: content
+			};
+		},
+		initSlider: function (slider, option) {
+			slider.on('init', function() {
+				setTimeout(function(){
+					slider.addClass('is-ready');
+				},200);
+			});
+			slider.not('.slick-initialized').slick(option);
+		},
+		showActiveElements: function (currentLink, currentContent) {
+			let currentSlider = currentContent.find('.slider');
+
+				allLinks.add(allContent).removeClass('is-active');
+				currentLink.add(currentContent).addClass('is-active');
+				MYAPP.initSlider(currentSlider, {slidesToShow: 2, infinite: false});
+		},
+		destroyPopup: function (popup, popupSlider) {
+			popup.removeClass('is-active');
+			popupSlider.remove();
+		}
+	}
+	let allLinks = $('.js-tabs-link');
 	let allContent = $('.js-content-item');
 	let linkFilter = allLinks.filter('.is-active');
 	let activeLink = linkFilter.length ? linkFilter : allLinks.eq(0);
 	let linkData = activeLink.attr('data-link');
-	let filtered = filterElements(linkData);
+	let filtered = MYAPP.filterElements(linkData);
 	let btn = $('.js-open-popup');
 	let popup = $('.js-popup');
 	let close = $('.js-close');
 
-	function filterElements(linkData) {
-		let link, content;
-
-		link = allLinks.filter('[data-link="' + linkData + '"]');
-		content = allContent.filter('[data-content="' + linkData + '"]');
-
-		return {
-			link: link,
-			content: content
-		};
-	}
-
-	function initSlider(slider, option) {
-		slider.on('init', function() {
-			setTimeout(function(){
-				slider.addClass('is-ready');
-			},200);
-		});
-		slider.not('.slick-initialized').slick(option);
-	}
-
-	function showActiveElements(currentLink, currentContent) {
-		let currentSlider = currentContent.find('.slider');
-		
-			allLinks.add(allContent).removeClass('is-active');
-			currentLink.add(currentContent).addClass('is-active');
-			initSlider(currentSlider, {slidesToShow: 2, infinite: false});
-	}
-
-	showActiveElements(filtered.link, filtered.content);
+	MYAPP.showActiveElements(filtered.link, filtered.content);
 
 	allLinks.click(function(e) {
 		let that = $(this);
 		let linkData = that.attr('data-link');
-		let filtered = filterElements(linkData);
+		let filtered = MYAPP.filterElements(linkData);
 
 		e.preventDefault();
-		showActiveElements(filtered.link, filtered.content);
+		MYAPP.showActiveElements(filtered.link, filtered.content);
 	});
 
 	btn.click(function() {
@@ -76,7 +78,7 @@ $(function() {
 		});
 
 		popup.addClass('is-active');
-		initSlider(sliderPopup, {slidesToShow: 1, initialSlide: index, infinite: false});
+		MYAPP.initSlider(sliderPopup, {slidesToShow: 1, initialSlide: index, infinite: false});
 		counterSlides.text(_slider.find('.slick-slide').length);
 		counterCurrent.text(index+1);
 		sliderPopup.on('beforeChange', function(e, slick, current, next) {
@@ -84,18 +86,13 @@ $(function() {
 		});
 	});
 
-	function destroyPopup(popup, popupSlider) {
-		popup.removeClass('is-active');
-		popupSlider.remove();
-	}
-
 	close.click(function() {
-		destroyPopup(popup, $('.js-slider-popup'));
+		MYAPP.destroyPopup(popup, $('.js-slider-popup'));
 	});
 
 	popup.click(function(e) {
 		if ($(this).is(e.target) ) {
-			destroyPopup(popup, $('.js-slider-popup'));
+			MYAPP.destroyPopup(popup, $('.js-slider-popup'));
 		}
 	});
 });
